@@ -10,7 +10,7 @@ const ICON_STANDARD_USER = 'standard:user';
 const ERROR_TITLE = 'Error loading Boats Near Me';
 const ERROR_VARIANT = 'error';
 export default class BoatsNearMe extends LightningElement {
-  @api boatTypeId;
+  @api boatTypeId='';
   mapMarkers = [];
   isLoading = true;
   isRendered;
@@ -23,7 +23,7 @@ export default class BoatsNearMe extends LightningElement {
   @wire(getBoatsByLocation,{latitude:'$latitude',longitude:'$longitude',boatTypeId:'$boatTypeId'})
   wiredBoatsJSON({error, data}) {
     if(data){
-      this.createMapMarkers(data);
+      this.createMapMarkers(JSON.parse(data));
     }else if (error){
       const eventContent = {
         title: ERROR_TITLE,
